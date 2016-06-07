@@ -1,0 +1,11 @@
+dataset_name: 'test_data'
+attributes:
+  - field1
+  - field2
+data:
+-
+  field1: 'foo'
+  field2: 'bar'
+-
+  field1: 'baz'
+  field2: 'qux'
