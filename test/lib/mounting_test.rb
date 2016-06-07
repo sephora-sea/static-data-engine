@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class StaticDataEngineTest < ActiveSupport::TestCase
-  test 'truth' do
-    assert_kind_of Module, StaticDataEngine
+  test 'integration' do
+    assert ::Mounter.mounted?
   end
 end

@@ -10,6 +10,7 @@ module StaticDataEngine
     test 'copies respective directories to appropriate places' do
       run_generator
       assert_file Rails.root.join('tmp/generators/lib/static_data_engine/data_sources/example.yml')
+      assert_file Rails.root.join('tmp/generators/config/initializers/static_data_engine_initializer.rb')
     end
   end
 end
