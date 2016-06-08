@@ -32,7 +32,7 @@ In `routes.rb`, add:
 
 1. Run 
     
-        StaticDataEngine::DataSeeder::Base.build_indexes!
+        StaticDataEngine::DataSeeder::Base.new.build_indexes!
 
 ### Querying for data
 
