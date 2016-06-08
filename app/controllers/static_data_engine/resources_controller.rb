@@ -2,15 +2,14 @@ require_dependency 'static_data_engine/application_controller'
 
 class StaticDataEngine::ResourcesController < ApplicationController
   def search
-    unless params[:table] && params[:query] && params[:field]
-      render json: {success: false, message: 'Missing parameters. Required `table`, `query` and `field`.'}, status: :unprocessable_entity
+    unless params[:dataset] && params[:query]
+      render json: {success: false, message: 'Missing parameters. Required `table` and `query`.'}, status: :unprocessable_entity
       return
     end
 
     begin
       result = StaticDataEngine::Query::Basic.new.search(
-        params[:table],
-        params[:field],
+        params[:dataset],
         params[:query]
       )
 

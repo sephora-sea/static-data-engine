@@ -6,10 +6,10 @@ class StaticDataEngine::Query::BasicTest < ActiveSupport::TestCase
   test '#search' do
     seed_data!
 
-    result = StaticDataEngine::Query::Basic.new.search('test_basic', 'attrib1', 'foo')
+    result = StaticDataEngine::Query::Basic.new.search('test_basic', 'attrib1:foo')
     assert_equal 1, result.count
 
-    result = StaticDataEngine::Query::Basic.new.search('test_basic', nil, nil, body: {
+    result = StaticDataEngine::Query::Basic.new.search('test_basic', nil, body: {
       query: {
         match: {
           attrib1: 'foo'

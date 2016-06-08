@@ -16,13 +16,13 @@ class StaticDataEngine::ResourcesControllerTest < ActionController::TestCase
     get :search, query: 'q'
     assert_response :unprocessable_entity
 
-    get :search, query: 'q', table: 't'
+    get :search, query: 'q', dataset: 't'
     assert_response :unprocessable_entity
 
-    get :search, query: 'foo', field: 'attrib1', table: 'test_non_existent'
+    get :search, query: 'foo', field: 'attrib1', dataset: 'test_non_existent'
     assert_response :unprocessable_entity
 
-    get :search, query: 'foo', field: 'attrib1', table: 'test_basic'
+    get :search, query: 'foo', field: 'attrib1', dataset: 'test_basic'
     resp = JSON.parse(response.body)
 
     assert resp['success']

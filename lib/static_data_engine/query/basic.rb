@@ -3,13 +3,13 @@ module StaticDataEngine::Query
     include StaticDataEngine::Namespace
     include StaticDataEngine::Client
 
-    def search(index, field, query, opts = {})
+    def search(index, query, opts = {})
       index = namespaced_index(index)
 
       results = if opts[:body]
                   client.search(index: index, body: opts[:body])
                 else
-                  client.search(index: index, q: "#{field}:#{query}")
+                  client.search(index: index, q: query)
                 end
 
       parse_results results
