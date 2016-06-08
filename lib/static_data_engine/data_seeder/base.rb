@@ -3,7 +3,10 @@ require 'yaml'
 
 module StaticDataEngine::DataSeeder
   class Base
-    def create_indexes
+    include StaticDataEngine::Namespace
+    include StaticDataEngine::Client
+
+    def build_indexes!
       Dir[Rails.root.join('lib/static_data_engine/data_sources/*.yml')].each do |dir_path|
         source = YAML.load_file(dir_path)
         persist_index source
@@ -13,38 +16,40 @@ module StaticDataEngine::DataSeeder
     private
 
     def persist_index(data)
-      index = "#{namespace}_#{data['dataset_name']}"
+      index = namespaced_index(data['dataset_name'])
 
       field_types = data['attributes'].inject({}) do |hash, (attribute, attribute_type)|
         hash[attribute] = attribute_type
         hash
       end
 
+      clear_existing_index(index)
+
       data['data'].each do |tuple|
         tuple.each do |k, v|
-          tuple[k] = cast_to_field_type(v, field_types[tuple[k]])
+          tuple[k] = cast_to_field_type(v, field_types[k])
         end
 
-        client.index index: index, body: tuple
+        client.index index: index, type: 'default', body: tuple
+      end
+
+      client.indices.refresh(index: index)
+    end
+
+    def clear_existing_index(index)
+      begin
+        client.indices.delete index: index
+      rescue Elasticsearch::Transport::Transport::Errors::NotFound
       end
     end
 
     def cast_to_field_type(field, type)
-      case type
+      case type.to_s
         when 'string'
           field.to_s
         when 'integer'
           field.to_i
       end
-    end
-
-    def client
-      @client ||= Elasticsearch::Client.new
-    end
-
-    def namespace
-      @ns ||=
-        "#{Rails.configuration.x.static_data_engine.namespace || 'static_data_engine'}_#{Rails.env}"
     end
   end
 end
