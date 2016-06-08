@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'generators/initializer/initializer_generator'
+require 'generators/static_data_engine/initializer/initializer_generator'
 
 module StaticDataEngine
   class InitializerGeneratorTest < Rails::Generators::TestCase
