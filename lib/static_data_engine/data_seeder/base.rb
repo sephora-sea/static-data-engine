@@ -25,17 +25,21 @@ module StaticDataEngine::DataSeeder
 
       clear_existing_index(index)
 
-      body_content = []
-      data['data'].each do |tuple|
-        tuple.each do |k, v|
-          tuple[k] = cast_to_field_type(v, field_types[k])
+      data['data'].each_slice(100) do |batch|
+        body_content = []
+
+        batch.each do |tuple|
+          tuple.each do |k, v|
+            tuple[k] = cast_to_field_type(v, field_types[k])
+          end
+
+          body_content << {index: {_index: index, _type: 'default'}}
+          body_content << tuple
         end
 
-        body_content << {index: {_index: index, _type: 'default'}}
-        body_content << tuple
+        client.bulk body: body_content
       end
 
-      client.bulk body: body_content
       client.indices.refresh(index: index)
     end
 
