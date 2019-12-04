@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files = Dir['test/**/*']
 
   s.add_dependency 'rails', '~> 5.2'
-  s.add_dependency 'elasticsearch'
+  s.add_dependency 'elasticsearch', '>= 5'
 
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'rr', '~> 1.1'

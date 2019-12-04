@@ -1,8 +1,8 @@
 PATH
   remote: .
   specs:
-    static_data_engine (0.0.1)
-      elasticsearch
+    static_data_engine (0.0.3)
+      elasticsearch (>= 5)
       rails (~> 5.2)
 
 GEM
