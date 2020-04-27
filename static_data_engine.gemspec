@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.email       = ['kern.cheh@gmail.com']
   s.summary     = 'Convert data sources to Queryable endpoints'
   s.description = 'Convert data sources to Queryable endpoints'
-  s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
   s.test_files = Dir['test/**/*']
